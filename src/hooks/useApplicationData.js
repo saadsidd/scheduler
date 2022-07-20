@@ -42,7 +42,8 @@ export default function useApplicationData() {
     return axios.put(`/api/appointments/${id}`, appointment)
       .then(() => {
         setState(prev => {
-          return { ...prev, appointments }
+          const days = updateSpots(prev, appointments, id);
+          return { ...prev, appointments, days }
         });
       });
     
@@ -64,9 +65,38 @@ export default function useApplicationData() {
     return axios.delete(`/api/appointments/${id}`)
       .then(() => {
         setState(prev => {
-          return { ...prev, appointments }
+          const days = updateSpots(prev, appointments, id);
+          return { ...prev, appointments, days }
         });
       });
+  }
+
+  const updateSpots = function(state, appointments, id) {
+    let daysCopy = [];
+
+    // Create a deep copy of the days array so state is not mutated
+    state.days.forEach(day => {
+      daysCopy.push({
+        ...day,
+        appointments: [...day.appointments],
+        interviewers: [...day.interviewers]
+      })
+    });
+
+    // Find day which contains the passed in appointment id, and count its spots
+    daysCopy.forEach(day => {
+      if (day.appointments.includes(id)) {
+        let spots = 5;
+        day.appointments.forEach(appointmentId => {
+          if (appointments[appointmentId].interview !== null) {
+            spots--;
+          }
+        });
+        day.spots = spots;
+      }
+    })
+
+    return daysCopy;
 
   }
 
