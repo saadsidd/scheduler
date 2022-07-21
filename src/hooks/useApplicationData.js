@@ -83,16 +83,19 @@ export default function useApplicationData() {
       })
     });
 
-    // Find day which contains the passed in appointment id, and count its spots
+    // Find day which contains the passed in appointment id
     daysCopy.forEach(day => {
+
       if (day.appointments.includes(id)) {
-        let spots = 5;
-        day.appointments.forEach(appointmentId => {
-          if (appointments[appointmentId].interview !== null) {
-            spots--;
-          }
-        });
-        day.spots = spots;
+
+        // Compare prev interview with appointments interview to either add (put request) or subtract (delete request)
+        if (state.appointments[id].interview !== null && appointments[id].interview === null) {
+          day.spots++;
+        }
+        else if (state.appointments[id].interview === null && appointments[id].interview !== null) {
+          day.spots--;
+        }
+
       }
     })
 
