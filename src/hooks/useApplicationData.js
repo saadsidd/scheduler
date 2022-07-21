@@ -34,6 +34,7 @@ export default function useApplicationData() {
       interview: { ...interview }
     };
 
+    // Creating new appointments object with new interview to use in setState
     const appointments = {
       ...state.appointments,
       [id]: appointment
@@ -42,6 +43,7 @@ export default function useApplicationData() {
     return axios.put(`/api/appointments/${id}`, appointment)
       .then(() => {
         setState(prev => {
+          // Get new returned days object with spot updated to use in setState
           const days = updateSpots(prev, appointments, id);
           return { ...prev, appointments, days }
         });
@@ -57,6 +59,7 @@ export default function useApplicationData() {
       interview: null
     };
 
+    // Creating new appointments object with null interview to use in setState
     const appointments = {
       ...state.appointments,
       [id]: appointment
@@ -65,6 +68,7 @@ export default function useApplicationData() {
     return axios.delete(`/api/appointments/${id}`)
       .then(() => {
         setState(prev => {
+          // Get new returned days object with spot updated to use in setState
           const days = updateSpots(prev, appointments, id);
           return { ...prev, appointments, days }
         });
@@ -83,21 +87,21 @@ export default function useApplicationData() {
       })
     });
 
-    // Find day which contains the passed in appointment id
     daysCopy.forEach(day => {
 
+      // Find day which contains the passed in appointment id
       if (day.appointments.includes(id)) {
 
-        // Compare prev interview with appointments interview to either add (put request) or subtract (delete request)
+        // Compare prev interview (old) with appointments interview (new from put/delete request)
+        // to either add or subtract spots
         if (state.appointments[id].interview !== null && appointments[id].interview === null) {
           day.spots++;
         }
         else if (state.appointments[id].interview === null && appointments[id].interview !== null) {
           day.spots--;
         }
-
       }
-    })
+    });
 
     return daysCopy;
 
