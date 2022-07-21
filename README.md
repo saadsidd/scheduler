@@ -7,7 +7,10 @@ Testing done with [Jest](https://github.com/facebook/jest), [Storybook](https://
 
 ## Screenshots
 ![Creating an interview](https://github.com/saadsidd/scheduler/blob/master/docs/create-interview.gif)
+<p align="center">Creating an interview</p>
+<br />
 ![Deleting an interview, with example error](https://github.com/saadsidd/scheduler/blob/master/docs/delete-interview.gif)
+<p align="center">Deleting an interview, with an example error</p>
 
 ## Setup
 
