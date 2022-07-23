@@ -1,7 +1,7 @@
 # Interview Scheduler
 An interview scheduler for students, built with React.
 <br />
-Uses [axios](https://github.com/axios/axios) for HTTP requests.
+Uses [axios](https://github.com/axios/axios) for HTTP requests to a mock [Scheduler API](https://github.com/saadsidd/scheduler-api).
 <br />
 Testing done with [Jest](https://github.com/facebook/jest), [Storybook](https://github.com/storybookjs/storybook), and [Cypress](https://github.com/cypress-io/cypress).
 
@@ -36,3 +36,11 @@ npm test
 ```sh
 npm run storybook
 ```
+
+## Dependencies
+- React
+- React DOM
+- React Scripts
+- Axios
+- Normalize.css
+- Classnames
